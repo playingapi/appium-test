@@ -380,9 +380,9 @@ def getTestPlatformArgs(testPlatform, highVersionAppium=True, appDownloadUrl='',
 
         #url = "https://eu-mobile-hub.bitbar.com/wd/hub"
 
-        #url = "https://us-west-mobile-hub.bitbar.com/wd/hub"
+        url = "https://us-west-mobile-hub.bitbar.com/wd/hub"
 
-        url = random.choice(['https://eu-mobile-hub.bitbar.com/wd/hub','https://us-west-mobile-hub.bitbar.com/wd/hub'])
+        #url = random.choice(['https://eu-mobile-hub.bitbar.com/wd/hub','https://us-west-mobile-hub.bitbar.com/wd/hub'])
         '''
         desired_caps = {
         'platformName': 'Android',
