@@ -276,7 +276,9 @@ waitTime = 10
 
 #appDownloadUrl = "https://www.pastefile.com/download/6nadk9"
 
-appDownloadUrl = "https://up.mediy.cn/PikPak-v1_b26c11f0a3bea7ee6506cd468a411201.apk"
+#appDownloadUrl = "https://www.pastefile.com/download/6nadk9"
+
+#appDownloadUrl = "https://up.mediy.cn/PikPak-v1_b26c11f0a3bea7ee6506cd468a411201.apk"
 #appDownloadUrl = "https://d.kstore.space/download/7536/PikPak-v1.42.6.apk"
 #appDownloadUrl = "https://github.com/hhsw2015/appium-test/raw/main/PikPak-v1.42.6.apk"
 #appDownloadUrl = "https://alist.ssh.surf/d/%E9%A3%9E%E6%9C%BA%E7%9B%98/PikPak-v1.42.6.apk?sign=gTD3W5U798BEJxLgkAPDtQFNmr69QbEbYW46vpPURv8=:0"
@@ -285,6 +287,10 @@ appDownloadUrl = "https://up.mediy.cn/PikPak-v1_b26c11f0a3bea7ee6506cd468a411201
 #appDownloadUrl = 'https://lz.ly93.cc/178/165662468/PikPak-v1.42.6.apk'
 #appDownloadUrl = 'https://ilz.ly93.cc/60/198593216/PikPak-v1.42.6.apk'
 
+appDownloadUrl = random.choice(['https://up.mediy.cn/PikPak-v1_b26c11f0a3bea7ee6506cd468a411201.apk', 
+                                'https://fs-im-kefu.7moor-fs1.com/29397395/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1709098147317/PikPak-v1.42.6.apk',
+                                'https://lz.ly93.cc/178/165662468/PikPak-v1.42.6.apk',
+                                'https://ilz.ly93.cc/60/198593216/PikPak-v1.42.6.apk'])
 
 appLocalUrl = os.getcwd() + "/PikPak-v1.42.6.apk"
 
