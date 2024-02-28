@@ -276,8 +276,8 @@ waitTime = 10
 
 #appDownloadUrl = "https://www.pastefile.com/download/6nadk9"
 
-#appDownloadUrl = "https://up.mediy.cn/PikPak-v1_b26c11f0a3bea7ee6506cd468a411201.apk"
-appDownloadUrl = "https://d.kstore.space/download/7536/PikPak-v1.42.6.apk"
+appDownloadUrl = "https://up.mediy.cn/PikPak-v1_b26c11f0a3bea7ee6506cd468a411201.apk"
+#appDownloadUrl = "https://d.kstore.space/download/7536/PikPak-v1.42.6.apk"
 #appDownloadUrl = "https://github.com/hhsw2015/appium-test/raw/main/PikPak-v1.42.6.apk"
 
 
