@@ -1407,4 +1407,4 @@ def start():
 
 if __name__ == '__main__':
     start()
-    input('程序运行结束')
+    print('程序运行结束')
