@@ -27,6 +27,7 @@ import hashlib
 import time
 import random
 import re
+import os
 
 
 # ==============验证码加密函数=============
@@ -1069,6 +1070,277 @@ def part11(user_id, phoneModel, phoneBuilder, invite_code, captcha_token, device
     print(response.text)
 
 
+
+
+def getBitbarKeyList():
+    bitbarKeyList = []
+    if os.path.exists("bitbar_key.txt"):
+        with open("bitbar_key.txt", "r") as f:
+            lines = f.readlines()
+            for line in lines:
+                line = line.strip().replace("\n", "")
+                if line != "" and line.startswith("#") == False:
+                    bitbarKeyList.append(line)
+    return bitbarKeyList
+
+def getTestingbotKeySecretList():
+    testingbotKeySecretList = []
+    if os.path.exists("testingbot_key_secret.txt"):
+        with open("testingbot_key_secret.txt", "r") as f:
+            lines = f.readlines()
+            for line in lines:
+                line = line.strip().replace("\n", "")
+    
+                if line != "" and line.startswith("#") == False:
+                    items = line.split(" ")
+                    testingbotKeySecretList.append({"key" : items[0], "secret" : items[1]})
+    return testingbotKeySecretList
+
+def getSaucelabsNameKeyList():
+    saucelabsNameKeyList = []
+    if os.path.exists("saucelabs_name_key.txt"):
+        with open("saucelabs_name_key.txt", "r") as f:
+            lines = f.readlines()
+            for line in lines:
+                line = line.strip().replace("\n", "")
+    
+                if line != "" and line.startswith("#") == False:
+                    items = line.split(" ")
+                    saucelabsNameKeyList.append({"username" : items[0], "key" : items[1]})
+    return saucelabsNameKeyList
+
+def getBrowserstackNameKeyList():
+    browserstackNameKeyList = []
+    if os.path.exists("browserstack_name_key.txt"):
+        with open("browserstack_name_key.txt", "r") as f:
+            lines = f.readlines()
+            for line in lines:
+                line = line.strip().replace("\n", "")
+    
+                if line != "" and line.startswith("#") == False:
+                    items = line.split(" ")
+                    browserstackNameKeyList.append({"username" : items[0], "key" : items[1]})
+
+    return browserstackNameKeyList
+
+
+def doGenAppiumCommand(platform, userList, passwordList, fullCommand=False, waitTime=10, combine=False):
+    messageList = []
+    preCommand = "pip install Appium-Python-Client; wget https://github.com/playingapi/appium-test/raw/main/appium_test.py; chmod 777 appium_test.py; "
+
+    if platform == "testingbot":
+      if combine:
+          keyList = getTestingbotKeySecretList()
+          for item in keyList:
+              waitTime = random.randint(10, 20)
+
+              message = "chmod 777 appium_test.py; ./appium_test.py -u " + ",".join(userList) + " -p " + ",".join(passwordList) + " -t testingbot -w " + str(waitTime) + " -k " + item["key"] + " -s " + item["secret"] + " -r 0"
+              if fullCommand:
+                  message = preCommand + message
+              messageList.append(message)    
+              print(message)
+
+          count = 0
+          for i in range(len(userList)):
+              u = userList[i]
+              p = passwordList[i]
+              item = ''
+              waitTime = random.randint(10, 20)
+              if count < len(keyList):
+                  item = keyList[count]
+                  
+              else:
+                 count = 0
+                 item = keyList[count]
+              count += 1
+
+              message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p " + p + " -t testingbot -w " + str(waitTime) + " -k " + item["key"] + " -s " + item["secret"] + " -r 0"
+              if fullCommand:
+                  message = preCommand + message
+              messageList.append(message)    
+              print(message)
+
+                 
+                          
+
+      else:
+        for item in getTestingbotKeySecretList():
+            for i in range(len(userList)):
+                u = userList[i]
+                p = passwordList[i]
+                message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p " + p + " -t testingbot -w " + str(waitTime) + " -k " + item["key"] + " -s " + item["secret"] + " -r 0"
+                if fullCommand:
+                    message = preCommand + message
+                messageList.append(message)    
+                print(message)
+
+    elif platform == "bitbar":
+      if combine:
+         keyList = getBitbarKeyList()
+         for key in keyList:
+            waitTime = random.randint(10, 20)
+            message = "chmod 777 appium_test.py; ./appium_test.py -u " + ",".join(userList) + " -p " + ",".join(passwordList) + " -t bitbar -w " + str(waitTime) + " -k " + key + " -r 0"
+            if fullCommand:
+                message = preCommand + message
+            messageList.append(message) 
+            print(message)
+         count = 0
+         for i in range(len(userList)):
+            u = userList[i]
+            p = passwordList[i]
+            item = ''
+            waitTime = random.randint(10, 20)
+            if count < len(keyList):
+                item = keyList[count]
+                
+            else:
+                count = 0
+                item = keyList[count]
+
+            count += 1
+
+            message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p " + p + " -t bitbar -w " + str(waitTime) + " -k " + item + " -r 0"
+            if fullCommand:
+                message = preCommand + message
+            messageList.append(message) 
+            print(message)
+
+      else:
+        for key in getBitbarKeyList():
+            for i in range(len(userList)):
+                u = userList[i]
+                p = passwordList[i]
+                message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p " + p + " -t bitbar -w " + str(waitTime) + " -k " + key + " -r 0"
+                if fullCommand:
+                    message = preCommand + message
+                messageList.append(message) 
+                print(message)
+
+    elif platform == "saucelabs":
+      if combine:
+          keyList = getSaucelabsNameKeyList()
+          for item in keyList:
+            waitTime = random.randint(10, 20)
+            message = "chmod 777 appium_test.py; ./appium_test.py -u " + ",".join(userList) + " -p " + ",".join(passwordList) + " -t saucelabs -w " + str(waitTime) + " -n " + item["username"] + " -k " + item["key"] + " -r 0"
+            if fullCommand:
+                message = preCommand + message
+            messageList.append(message) 
+            print(message)
+
+          count = 0
+          for i in range(len(userList)):
+            u = userList[i]
+            p = passwordList[i]
+            item = ''
+            waitTime = random.randint(10, 20)
+            if count < len(keyList):
+                item = keyList[count]
+                
+            else:
+                count = 0
+                item = keyList[count]
+            count += 1
+
+            message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p " + p + " -t saucelabs -w " + str(waitTime) + " -n " + item["username"] + " -k " + item["key"] + " -r 0"
+            if fullCommand:
+                message = preCommand + message
+            messageList.append(message) 
+            print(message)
+      else:
+        for item in getSaucelabsNameKeyList():
+            for i in range(len(userList)):
+                u = userList[i]
+                p = passwordList[i]
+                message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p " + p + " -t saucelabs -w " + str(waitTime) + " -n " + item["username"] + " -k " + item["key"] + " -r 0"
+                if fullCommand:
+                    message = preCommand + message
+                messageList.append(message) 
+                print(message)
+
+    elif platform == "browserstack":
+
+      if combine:
+        keyList = getBrowserstackNameKeyList()
+        for item in keyList:
+          waitTime = random.randint(10, 20)
+          message = "chmod 777 appium_test.py; ./appium_test.py -u " + ",".join(userList) + " -p " + ",".join(passwordList) + " -t browserstack -w " + str(waitTime) + " -n " + item["username"] + " -k " + item["key"] + " -r 0"
+          if fullCommand:
+              message = preCommand + message
+          messageList.append(message) 
+          print(message)
+
+        count = 0
+        for i in range(len(userList)):
+            u = userList[i]
+            p = passwordList[i]
+            item = ''
+            waitTime = random.randint(10, 20)
+            if count < len(keyList):
+                item = keyList[count]
+            else:
+                count = 0
+                item = keyList[count]
+            count += 1
+
+            message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p " + p + " -t browserstack -w " + str(waitTime) + " -n " + item["username"] + " -k " + item["key"] + " -r 0"
+            if fullCommand:
+                message = preCommand + message
+            messageList.append(message) 
+            print(message)
+      else:
+        for item in getBrowserstackNameKeyList():
+            for i in range(len(userList)):
+                u = userList[i]
+                p = passwordList[i]
+                message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p " + p + " -t browserstack -w " + str(waitTime) + " -n " + item["username"] + " -k " + item["key"] + " -r 0"
+                if fullCommand:
+                    message = preCommand + message
+                messageList.append(message) 
+                print(message)
+
+    elif platform == "appetize":
+
+      if combine:
+          message = "chmod 777 appium_test.py; ./appium_test.py -u " + ",".join(userList) + " -p  " + ",".join(passwordList) + "  -t appetize -a /home/ubuntu/workspace/PikPak-v1.42.6.apk -w " + str(waitTime) + " -i localhost:6000" + " -r 0"
+          if fullCommand:
+              message = preCommand + message
+          messageList.append(message) 
+          print(message)
+      else:
+
+        for i in range(len(userList)):
+            u = userList[i]
+            p = passwordList[i]
+            message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p  " + p + "  -t appetize -a /home/ubuntu/workspace/PikPak-v1.42.6.apk -w " + str(waitTime) + " -i localhost:6000" + " -r 0"
+            if fullCommand:
+                message = preCommand + message
+            messageList.append(message) 
+            print(message)
+
+
+    elif platform == "samsung":
+
+      if combine:
+          message = "chmod 777 appium_test.py; ./appium_test.py -u " + ",".join(userList) + " -p  " + ",".join(passwordList) + "  -t samsung -a /home/ubuntu/workspace/PikPak-v1.42.6.apk -w " + str(waitTime) + " -i localhost:56238" + " -r 0"
+          if fullCommand:
+              message = preCommand + message
+          messageList.append(message) 
+          print(message)
+      else:
+
+        for i in range(len(userList)):
+            u = userList[i]
+            p = passwordList[i]
+            message = "chmod 777 appium_test.py; ./appium_test.py -u " + u + " -p  " + p + "  -t samsung -a /home/ubuntu/workspace/PikPak-v1.42.6.apk -w " + str(waitTime) + " -i localhost:56238" + " -r 0"
+            if fullCommand:
+                message = preCommand + message
+            messageList.append(message) 
+            print(message)
+
+    return messageList
+
+ 
+
 # 程序运行主函数
 def start():
     invite_code = input("请输入你的账号邀请码：")
@@ -1145,6 +1417,9 @@ def start():
     print("PWD：", password)
     print("NAME：", name)
 
+
+    for item in doGenAppiumCommand("bitbar", [email], [password], fullCommand=False, waitTime=20):
+        print(item)
 
 if __name__ == '__main__':
     print('注意事项：')
