@@ -763,13 +763,13 @@ def main(argv):
         elif o in ('-r', '--retry'):
             retry = int(a)
         elif o in ('-h', '--help'):
-            print("./test.py -u user -p password -t testingbot -w 10 -k apiKey -s secret")
-            print("./test.py -u user -p password -t bitbar -w 10 -k apiKey")
-            print("./test.py -u user -p password -t samsung -a /home/ubuntu/workspace/PikPak-v1.42.6.apk -w 10 -i localhost:56238")
-            print("./test.py -u user -p password -t appetize -a /home/ubuntu/workspace/PikPak-v1.42.6.apk -w 10 -i localhost:6000")
-            print("./test.py -u user -p password -t saucelabs -w 10 -n name -k apiKey")
-            print("./test.py -u user -p password -t browserstack -w 10 -n name -k apiKey")
-            print("./test.py -u user -p password -t mumuplayer -w 10 -i 127.0.0.1:16384")
+            print("./appium_test.py -u user -p password -t testingbot -w 10 -k apiKey -s secret")
+            print("./appium_test.py -u user -p password -t bitbar -w 10 -k apiKey")
+            print("./appium_test.py -u user -p password -t samsung -a /home/ubuntu/workspace/PikPak-v1.42.6.apk -w 10 -i localhost:56238")
+            print("./appium_test.py -u user -p password -t appetize -a /home/ubuntu/workspace/PikPak-v1.42.6.apk -w 10 -i localhost:6000")
+            print("./appium_test.py -u user -p password -t saucelabs -w 10 -n name -k apiKey")
+            print("./appium_test.py -u user -p password -t browserstack -w 10 -n name -k apiKey")
+            print("./appium_test.py -u user -p password -t mumuplayer -w 10 -i 127.0.0.1:16384")
 
 
             if testPlatform == "testingbot":
@@ -778,14 +778,14 @@ def main(argv):
                     for i in range(len(userList)):
                         u = userList[i]
                         p = passwordList[i]
-                        print("./test.py -u " + u + " -p " + p + " -t testingbot -w " + str(waitTime) + " -k " + item["key"] + " -s " + item["secret"])
+                        print("./appium_test.py -u " + u + " -p " + p + " -t testingbot -w " + str(waitTime) + " -k " + item["key"] + " -s " + item["secret"])
             elif testPlatform == "bitbar":
                 print(" ")
                 for key in bitbarKeyList:
                     for i in range(len(userList)):
                         u = userList[i]
                         p = passwordList[i]
-                        print("./test.py -u " + u + " -p " + p + " -t bitbar -w " + str(waitTime) + " -k " + key)
+                        print("./appium_test.py -u " + u + " -p " + p + " -t bitbar -w " + str(waitTime) + " -k " + key)
             
             sys.exit()
 
