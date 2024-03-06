@@ -12,6 +12,7 @@ import time
 import random
 import re
 import os
+from time import sleep
 
 
 # ==============验证码加密函数=============
@@ -641,13 +642,83 @@ def get_ua_key(device_id):
 
 
 # 自定义邮箱接口，可配置自己的邮箱API接口实现自动化
-def get_email():
-    return input("请输入接收验证码的邮箱：")
+def get_email(fromInput=False):
+
+    if fromInput:
+        return input("请输入接收验证码的邮箱：")
+    else:
+        characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        username = ''
+        characters_length = len(characters)
+        for i in range(6):
+            username += characters[random.randint(0, characters_length-1)]
+    
+    
+        response = requests.get("https://api.internal.temp-mail.io/api/v4/domains")
+        data = response.json()
+    
+        domainList = []
+        #domainList = ["greencafe24.com", "waterisgone.com", "gixenmixen.com", "bloheyz.com", "zipcatfish.com", "myinfoinc.com", "skygazerhub.com", "sfolkar.com", "pirolsnet.com", "rentforsale7.com", "tippabble.com", "rfcdrive.com", "gonetor.com"]
+        for item in data["domains"]:
+            domainList.append(item["name"])
+        print(domainList)
+    
+        domain = random.choice(domainList)
+    
+        mail = username + "@" + domain
+        print("mail: " + mail)
+    
+        url = "https://api.internal.temp-mail.io/api/v3/email/new"
+        data = {
+            "name" : username,
+            "domain" : domain
+        }
+    
+        response = requests.post(url, json=data)
+    
+        jobj = response.json()
+        print(jobj)
+    
+        return jobj["email"]
 
 
 # 接收验证码接口，可配置自己的邮箱API接口实现自动化
-def get_verification_code():
-    return input("请输入你接受到的验证码：")
+def get_verification_code(email, fromInput=False):
+    if fromInput:
+        return input("请输入你接受到的验证码：")
+    else:
+        url = "https://api.internal.temp-mail.io/api/v3/email/" + email + "/messages"
+    
+        validation_code = ''
+    
+        sleep(2)
+    
+        retryCount = 10
+    
+        for i in range(50):
+    
+            response = requests.get(url)
+            jobj = response.json()
+            print(jobj)
+    
+            if len(jobj) > 0 and "body_text" in jobj[0]:
+                validation_code = re.search(r'\d{6}', jobj[0]["body_text"])
+    
+                if validation_code:
+                  validation_code = validation_code.group()
+    
+    
+                print('validation_code: %s' % str(validation_code))
+                return validation_code
+            else:
+                print("Waiting for new email from noreply...")
+                retryCount -= 1
+                if retryCount < 0:
+                    return validation_code
+    
+            sleep(3)
+        return validation_code
+
 
 
 # ============全部网络请求============
@@ -1332,7 +1403,9 @@ def start():
     device_id = str(uuid.uuid4()).replace("-", "")
     timestamp = str(int(time.time()) * 1000)
 
-    email = get_email()
+    fromInput = False
+
+    email = get_email(fromInput=fromInput)
     org_str = client_id + "1.38.0" + "com.pikcloud.pikpak" + device_id + timestamp
     captcha_sign = get_sign(org_str)
     print(captcha_sign)
@@ -1365,7 +1438,7 @@ def start():
     action6 = part6(client_id, action5["captcha_token"], email, device_id, user_agent)
 
     # 获取验证码
-    verification_code = get_verification_code()
+    verification_code = get_verification_code(email, fromInput=fromInput)
 
     # verification_token,expires_in
     action8 = part8(client_id, action6['verification_id'], verification_code, device_id, User_Agent)
@@ -1382,7 +1455,7 @@ def start():
     # 账号的昵称设置
     name = email.split("@")[0]
     # 账号的密码设置
-    password = "pwd123456"
+    password = "zd19861111"
     action9 = part9(client_id, action8_1['captcha_token'], client_secret, email, name, password,
                     action8['verification_token'], device_id, User_Agent)
     time.sleep(1)
