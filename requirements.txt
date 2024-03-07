@@ -1,2 +1,2 @@
 Appium-Python-Client
-requests
+curl_cffi
