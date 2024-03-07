@@ -4,7 +4,8 @@
 #pip install requests
 
 
-import requests
+#import requests
+from curl_cffi import requests
 import json
 import uuid
 import hashlib
@@ -14,6 +15,8 @@ import re
 import os
 from time import sleep
 
+
+impersonate = random.choice(['chrome', 'chrome99', 'chrome100', 'chrome101', 'chrome104', 'chrome107', 'chrome110', 'chrome116', 'chrome119', 'chrome120', 'chrome99_android', 'edge99', 'edge101', 'safari15_3', 'safari15_5', 'safari17_0', 'safari17_2_ios'])
 
 # ==============验证码加密函数=============
 
@@ -727,7 +730,7 @@ def get_verification_code(email, fromInput=False):
 # 初始化人机验证网页
 # url,captcha_token,expires_in
 def part2(client_id, captcha_token, device_id, captcha_sign, email, timestamp, User_Agent):
-    import requests
+    #import requests
 
     url = "https://user.mypikpak.com/v1/shield/captcha/init"
 
@@ -754,7 +757,7 @@ def part2(client_id, captcha_token, device_id, captcha_sign, email, timestamp, U
     }
     headers.update(basicRequestHeaders_1)
 
-    response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
+    response = requests.request("POST", url, json=payload, headers=headers, params=querystring, impersonate=impersonate)
 
     print(response.text)
     return json.loads(response.text)
@@ -763,7 +766,7 @@ def part2(client_id, captcha_token, device_id, captcha_sign, email, timestamp, U
 # 获取图片列表
 # pid,traceid,frames,result
 def part3(device_id, user_agent, referer):
-    import requests
+    #import requests
 
     url = "https://user.mypikpak.com/pzzl/gen"
 
@@ -777,7 +780,7 @@ def part3(device_id, user_agent, referer):
     }
     headers.update(basicRequestHeaders_2)
 
-    response = requests.request("GET", url, headers=headers, params=querystring)
+    response = requests.request("GET", url, headers=headers, params=querystring, impersonate=impersonate)
 
     print(response.text)
     return json.loads(response.text)
@@ -786,7 +789,7 @@ def part3(device_id, user_agent, referer):
 # 验证图片序号
 # result
 def part4(pid, device_id, trace_id, f, n, p, a, c, referer, user_agent):
-    import requests
+    #import requests
 
     url = "https://user.mypikpak.com/pzzl/verify"
 
@@ -802,7 +805,7 @@ def part4(pid, device_id, trace_id, f, n, p, a, c, referer, user_agent):
     }
     headers.update(basicRequestHeaders_2)
 
-    response = requests.request("GET", url, headers=headers, params=querystring)
+    response = requests.request("GET", url, headers=headers, params=querystring, impersonate=impersonate)
 
     print(response.text)
     return json.loads(response.text)
@@ -811,7 +814,7 @@ def part4(pid, device_id, trace_id, f, n, p, a, c, referer, user_agent):
 # 发送验证码
 # code,captcha_token,expires_in
 def part5(device_id, captcha_token, pid, trace_id, user_agent, referer):
-    import requests
+    #import requests
 
     url = "https://user.mypikpak.com/credit/v1/report"
 
@@ -827,7 +830,7 @@ def part5(device_id, captcha_token, pid, trace_id, user_agent, referer):
         "referer": referer,
     }
     headers.update(basicRequestHeaders_2)
-    response = requests.request("GET", url, headers=headers, params=querystring)
+    response = requests.request("GET", url, headers=headers, params=querystring, impersonate=impersonate)
 
     print(response.text)
     return json.loads(response.text)
@@ -836,7 +839,7 @@ def part5(device_id, captcha_token, pid, trace_id, user_agent, referer):
 # 验证验证码1
 # verification_id,expires_in,slected_channel
 def part6(client_id, captcha_token, email, device_id, User_Agent):
-    import requests
+    #import requests
 
     url = "https://user.mypikpak.com/v1/auth/verification"
 
@@ -855,7 +858,7 @@ def part6(client_id, captcha_token, email, device_id, User_Agent):
     }
     headers.update(basicRequestHeaders_1)
 
-    response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
+    response = requests.request("POST", url, json=payload, headers=headers, params=querystring, impersonate=impersonate)
 
     print(response.text)
     return json.loads(response.text)
@@ -864,7 +867,7 @@ def part6(client_id, captcha_token, email, device_id, User_Agent):
 # 验证验证码2
 # verification_token,expires_in
 def part8(client_id, verification_id, verification_code, device_id, User_Agent):
-    import requests
+    #import requests
 
     url = "https://user.mypikpak.com/v1/auth/verification/verify"
 
@@ -881,7 +884,7 @@ def part8(client_id, verification_id, verification_code, device_id, User_Agent):
     }
     headers.update(basicRequestHeaders_1)
 
-    response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
+    response = requests.request("POST", url, json=payload, headers=headers, params=querystring, impersonate=impersonate)
 
     print(response.text)
     return json.loads(response.text)
@@ -890,7 +893,7 @@ def part8(client_id, verification_id, verification_code, device_id, User_Agent):
 # 安全验证
 # captcha_token,expires_in
 def part8_1(client_id, captcha_token, device_id, captcha_sign, email, timestamp, User_Agent):
-    import requests
+    #import requests
 
     url = "https://user.mypikpak.com/v1/shield/captcha/init"
 
@@ -920,7 +923,7 @@ def part8_1(client_id, captcha_token, device_id, captcha_sign, email, timestamp,
         "accept-encoding": "gzip"
     }
 
-    response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
+    response = requests.request("POST", url, json=payload, headers=headers, params=querystring, impersonate=impersonate)
 
     print(response.text)
     return json.loads(response.text)
@@ -929,7 +932,7 @@ def part8_1(client_id, captcha_token, device_id, captcha_sign, email, timestamp,
 # 注册账号
 # access_token,expires_in,sub
 def part9(client_id, captcha_token, client_secret, email, name, password, verification_token, device_id, User_Agent):
-    import requests
+    #import requests
 
     url = "https://user.mypikpak.com/v1/auth/signup"
 
@@ -950,7 +953,7 @@ def part9(client_id, captcha_token, client_secret, email, name, password, verifi
     }
     headers.update(basicRequestHeaders_1)
 
-    response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
+    response = requests.request("POST", url, json=payload, headers=headers, params=querystring, impersonate=impersonate)
 
     print(response.text)
     return json.loads(response.text)
@@ -959,7 +962,7 @@ def part9(client_id, captcha_token, client_secret, email, name, password, verifi
 # 安全验证
 # captcha_token,expires_in
 def part10(client_id, captcha_token, device_id, captcha_sign, user_id, timestamp, User_Agent):
-    import requests
+    #import requests
 
     url = "https://user.mypikpak.com/v1/shield/captcha/init"
 
@@ -985,14 +988,14 @@ def part10(client_id, captcha_token, device_id, captcha_sign, user_id, timestamp
     }
     headers.update(basicRequestHeaders_1)
 
-    response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
+    response = requests.request("POST", url, json=payload, headers=headers, params=querystring, impersonate=impersonate)
 
     print(response.text)
     return json.loads(response.text)
 
 
 def one_invite(user_id, phoneModel, phoneBuilder, invite_code, captcha_token, device_id, access_token, User_Agent):
-    import requests
+    #import requests
 
     url = "https://api-drive.mypikpak.com/vip/v1/activity/invite"
 
@@ -1036,14 +1039,14 @@ def one_invite(user_id, phoneModel, phoneBuilder, invite_code, captcha_token, de
         "content-type": "application/json"
     }
 
-    response = requests.request("POST", url, json=payload, headers=headers)
+    response = requests.request("POST", url, json=payload, headers=headers, impersonate=impersonate)
 
     print(response.text)
 
 
 # 邀请码填写
 def part_invite(user_id, phoneModel, phoneBuilder, invite_code, captcha_token, device_id, access_token, User_Agent):
-    import requests
+    #import requests
 
     url = "https://api-drive.mypikpak.com/vip/v1/order/activation-code"
 
@@ -1067,13 +1070,13 @@ def part_invite(user_id, phoneModel, phoneBuilder, invite_code, captcha_token, d
         "content-type": "application/json"
     }
 
-    response = requests.request("POST", url, json=payload, headers=headers)
+    response = requests.request("POST", url, json=payload, headers=headers, impersonate=impersonate)
 
     print(response.text)
 
 
 def part11(user_id, phoneModel, phoneBuilder, invite_code, captcha_token, device_id, access_token, User_Agent):
-    import requests
+    #import requests
 
     url = "https://api-drive.mypikpak.com/vip/v1/activity/invite"
 
@@ -1120,7 +1123,7 @@ def part11(user_id, phoneModel, phoneBuilder, invite_code, captcha_token, device
         "content-type": "application/json"
     }
 
-    response = requests.request("POST", url, json=payload, headers=headers)
+    response = requests.request("POST", url, json=payload, headers=headers, impersonate=impersonate)
 
     print(response.text)
 
