@@ -307,7 +307,7 @@ appDownloadUrl = random.choice(['https://up.mediy.cn/PikPak-v1_e49c2757b19187f5e
 
 appDownloadUrl = random.choice(['https://up.mediy.cn/PikPak-v1_e49454201cfa26629c44e2df09e584ee.apk',
                                 'https://fs-im-kefu.7moor-fs1.com/29397395/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1709714787859/PikPak-v1.42.8.apk',
-                                'https://lz.ly93.cc/178/167192454/PikPak-v1.42.8.apk',
+                                #'https://lz.ly93.cc/178/167192454/PikPak-v1.42.8.apk',
                                 'https://file.uhsea.com/2403/da613ef7af31a308e97bf940bb91c299KK.apk',
                                 'https://pikpak.s3.bitiful.net/PikPak-v1.42.8.apk',
                                 'https://pikpak2.s3.bitiful.net/PikPak-v1.42.8.apk',
