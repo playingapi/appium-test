@@ -9,8 +9,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from appium.options.android import UiAutomator2Options
-#import requests
-#import json
+import requests
+import json
 import random
 from time import sleep
 import getopt
@@ -517,6 +517,39 @@ def getTestPlatformArgs(testPlatform, highVersionAppium=True, appDownloadUrl='',
         }
 
         url = "http://127.0.0.1:4723" #2.5.0
+    elif testPlatform == "tricentis":
+        #https://tdc.tricentis-cloud.com/docs/appium-getting-started
+        print("tricentis")
+
+        r = requests.get("https://" + apiKey + "@api.tdc.tricentis-cloud.com/v0/devices/automation-config")
+        jobj = json.loads(r.text)
+        deviceList = []
+        for k, v in jobj.items():
+            if "os" in v:
+                if v["os"]  == "android":
+                    deviceList.append({
+                        "platformName": v["capabilities"]["platformName"],
+                        "udid": v["capabilities"]["udid"],
+                        "deviceName": v["capabilities"]["deviceName"],
+                        "driver_url": v["driver_url"]
+                    })
+        device = random.choice(deviceList)
+
+        desired_caps = {}
+
+        desired_caps["udid"] = device["udid"]
+        desired_caps["deviceName"] = device["deviceName"]
+        desired_caps["platformName"] = "Android"
+        desired_caps["automationName"] = "UiAutomator2"
+        desired_caps["noReset"] = True
+        desired_caps["autoAcceptAlerts"] = True
+        desired_caps["app"] = appDownloadUrl
+        desired_caps["appPackage"] = appPackage
+        desired_caps["appActivity"] = appActivity
+
+
+        url = device["driver_url"].replace("{api_token}", apiKey)
+       
 
 
     
