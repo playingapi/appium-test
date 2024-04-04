@@ -314,6 +314,14 @@ appDownloadUrl = random.choice(['https://up.mediy.cn/PikPak-v1_e49454201cfa26629
                                 'https://pikpak3.s3.bitiful.net/PikPak-v1.42.8.apk',
                                 'https://pikpak4.s3.bitiful.net/PikPak-v1.42.8.apk'])
 
+appDownloadUrl = random.choice(['https://up.mediy.cn/PikPak-v1_9a0d64544b5e146a0fd2232dc52c4e06.apk',
+                                'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1712201589051/PikPak-v1.43.1.apk',
+                                'https://file.uhsea.com/2404/e0966e213daa0d46a79308e3e99a5b1cC1.apk',
+                                'https://pikpak.s3.bitiful.net/PikPak-v1.43.1.apk',
+                                'https://pikpak2.s3.bitiful.net/PikPak-v1.43.1.apk',
+                                'https://pikpak3.s3.bitiful.net/PikPak-v1.43.1.apk',
+                                'https://pikpak4.s3.bitiful.net/PikPak-v1.43.1.apk'])
+
 appLocalUrl = os.getcwd() + "/PikPak-v1.42.6.apk"
 
 
